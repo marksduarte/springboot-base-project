@@ -1,0 +1,4 @@
+info:
+  name: SpringBoot Base
+  description: Base project for spring boot apps.
+  version: @version@
