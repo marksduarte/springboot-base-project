@@ -1,4 +1,13 @@
 info:
   name: SpringBoot Base
   description: Base project for spring boot apps.
-  version: @version@
+  version: ${info.build.version}
+
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: none
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true

@@ -25,6 +25,9 @@ public class User extends BaseEntity<UUID> implements Serializable {
     @Column(name = "st_username", length = 100, nullable = false)
     private String username;
 
+    @Column(name = "st_email", length = 100, nullable = false)
+    private String email;
+
     @Column(name = "st_password", length = 500, nullable = false)
     private String password;
 

@@ -4,6 +4,8 @@ import dev.marksduarte.springbootbase.exceptions.ObjectNotFoundException;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -58,8 +60,13 @@ public abstract class BaseService<E extends BaseEntity<?>, V, R extends JpaRepos
         return this.repository.findAll();
     }
 
-    public Page<E> findAll(Pageable pageable) {
-        return this.repository.findAll(pageable);
+    public Page<E> findAll(@NotNull E entity, Pageable pageable) {
+        ExampleMatcher matcher = ExampleMatcher
+                .matching()
+                .withIgnoreCase()
+                .withStringMatcher(ExampleMatcher.StringMatcher.CONTAINING);
+        Example<E> example = Example.of(entity, matcher);
+        return this.repository.findAll(example, pageable);
     }
 
     protected void validateAndPrepareForSave(@NotNull E entity) {
