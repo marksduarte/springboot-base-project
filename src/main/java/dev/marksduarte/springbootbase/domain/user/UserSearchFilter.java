@@ -1,14 +1,13 @@
 package dev.marksduarte.springbootbase.domain.user;
 
-import dev.marksduarte.springbootbase.base.BaseSearchFilterDTO;
-import dev.marksduarte.springbootbase.domain.repositories.specifications.UserSpec;
+import dev.marksduarte.springbootbase.base.BaseSearchFilter;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.springframework.data.jpa.domain.Specification;
 
 @Getter
 @AllArgsConstructor
-public class UserSearchFilterDTO extends BaseSearchFilterDTO<User> {
+public class UserSearchFilter extends BaseSearchFilter<User> {
     private String username;
     private String email;
 

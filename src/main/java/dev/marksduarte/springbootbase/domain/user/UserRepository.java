@@ -1,7 +1,6 @@
-package dev.marksduarte.springbootbase.domain.repositories;
+package dev.marksduarte.springbootbase.domain.user;
 
 import dev.marksduarte.springbootbase.base.BaseRepository;
-import dev.marksduarte.springbootbase.domain.user.User;
 import org.springframework.stereotype.Repository;
 
 import java.util.UUID;

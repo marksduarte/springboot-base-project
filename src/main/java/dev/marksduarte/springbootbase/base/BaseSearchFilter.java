@@ -5,7 +5,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 
-public abstract class BaseSearchFilterDTO<E> {
+public abstract class BaseSearchFilter<E> {
     private static final int DEFAULT_PAGE_NUMBER = 0;
     private static final int DEFAULT_PAGE_SIZE = 10;
     private static final Sort.Direction DEFAULT_SORT_DIRECTION = Sort.Direction.DESC;

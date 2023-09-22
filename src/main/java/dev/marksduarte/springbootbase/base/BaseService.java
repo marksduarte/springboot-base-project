@@ -67,7 +67,7 @@ public abstract class BaseService<E extends BaseEntity<?>, V, R extends BaseRepo
         return this.repository.findAll(Example.of(entity, DEFAULT_EXAMPLE_MATCHER), pageable);
     }
 
-    public Page<E> findAll(@NotNull BaseSearchFilterDTO<E> searchFilter) {
+    public Page<E> findAll(@NotNull BaseSearchFilter<E> searchFilter) {
         return this.repository.findAll(searchFilter.toSpecification(), searchFilter.getPageable());
     }
 

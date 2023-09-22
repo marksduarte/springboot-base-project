@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Collection;
 import java.util.UUID;
 
-public interface ControllerHttpMethods<E extends BaseEntity<?>, T extends BaseDTO, F extends BaseSearchFilterDTO<E>> {
+public interface ControllerHttpMethods<E extends BaseEntity<?>, T extends BaseDTO, F extends BaseSearchFilter<E>> {
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     ResponseEntity<Collection<T>> findAll();

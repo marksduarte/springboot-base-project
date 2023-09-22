@@ -1,8 +1,6 @@
-package dev.marksduarte.springbootbase.domain.repositories.specifications;
+package dev.marksduarte.springbootbase.domain.user;
 
 import dev.marksduarte.springbootbase.base.BaseSpecification;
-import dev.marksduarte.springbootbase.domain.user.User;
-import dev.marksduarte.springbootbase.domain.user.UserSearchFilterDTO;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Predicate;
@@ -12,9 +10,9 @@ import org.springframework.util.StringUtils;
 import java.util.LinkedList;
 import java.util.List;
 
-public class UserSpec extends BaseSpecification<UserSearchFilterDTO, User> {
+public class UserSpec extends BaseSpecification<UserSearchFilter, User> {
 
-    public UserSpec(UserSearchFilterDTO searchFilter) {
+    public UserSpec(UserSearchFilter searchFilter) {
         super(searchFilter);
     }
 
