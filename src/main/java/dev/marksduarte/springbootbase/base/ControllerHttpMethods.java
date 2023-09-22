@@ -10,14 +10,18 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Collection;
 import java.util.UUID;
 
-public interface ControllerHttpMethods<T extends BaseDTO> {
+public interface ControllerHttpMethods<E extends BaseEntity<?>, T extends BaseDTO, F extends BaseSearchFilterDTO<E>> {
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     ResponseEntity<Collection<T>> findAll();
 
     @GetMapping(value = "paged",
             consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    ResponseEntity<Page<T>> findPaged(T filter, Pageable pageable);
+    ResponseEntity<Page<T>> findPaged(F filter, Pageable pageable);
+
+    @GetMapping(value = "paged/filter",
+            consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    ResponseEntity<Page<T>> findPagedWithFilter(F filter, Pageable pageable);
 
     @GetMapping(value = "{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     ResponseEntity<T> findById(@PathVariable("id") UUID id);

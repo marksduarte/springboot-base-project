@@ -15,7 +15,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping(value = "auth/user", produces = MediaType.APPLICATION_JSON_VALUE)
-public class UserController implements ControllerHttpMethods<UserDTO> {
+public class UserController implements ControllerHttpMethods<User, UserDTO, UserSearchFilterDTO> {
 
     private final UserService service;
     private final CustomMapper mapper;
@@ -31,9 +31,15 @@ public class UserController implements ControllerHttpMethods<UserDTO> {
     }
 
     @Override
-    public ResponseEntity<Page<UserDTO>> findPaged(UserDTO filter, Pageable pageable) {
+    public ResponseEntity<Page<UserDTO>> findPaged(UserSearchFilterDTO filter, Pageable pageable) {
         var entity = mapper.map(filter, User.class);
         return ResponseEntity.ok(mapper.mapPage(service.findAll(entity, pageable), UserDTO.class));
+    }
+
+    @Override
+    public ResponseEntity<Page<UserDTO>> findPagedWithFilter(UserSearchFilterDTO filter, Pageable pageable) {
+        filter.setPageable(pageable);
+        return ResponseEntity.ok(mapper.mapPage(service.findAll(filter), UserDTO.class));
     }
 
     @Override

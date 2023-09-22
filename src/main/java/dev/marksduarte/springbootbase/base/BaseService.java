@@ -8,7 +8,6 @@ import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
@@ -21,14 +20,18 @@ import java.util.Optional;
 @Log4j2
 @Service
 @Validated
-public abstract class BaseService<E extends BaseEntity<?>, V, R extends JpaRepository<E, V>> {
+public abstract class BaseService<E extends BaseEntity<?>, V, R extends BaseRepository<E, V>> {
+
+    protected static final ExampleMatcher DEFAULT_EXAMPLE_MATCHER = ExampleMatcher.matching()
+            .withIgnoreCase()
+            .withStringMatcher(ExampleMatcher.StringMatcher.CONTAINING);
+
     protected final R repository;
 
     protected BaseService(R repository) {
         this.repository = repository;
     }
 
-    @Transactional
     public E findById(@NotNull V id) {
         Optional<E> entity = this.repository.findById(id);
         return this.extractEntity(entity, id);
@@ -61,12 +64,11 @@ public abstract class BaseService<E extends BaseEntity<?>, V, R extends JpaRepos
     }
 
     public Page<E> findAll(@NotNull E entity, Pageable pageable) {
-        ExampleMatcher matcher = ExampleMatcher
-                .matching()
-                .withIgnoreCase()
-                .withStringMatcher(ExampleMatcher.StringMatcher.CONTAINING);
-        Example<E> example = Example.of(entity, matcher);
-        return this.repository.findAll(example, pageable);
+        return this.repository.findAll(Example.of(entity, DEFAULT_EXAMPLE_MATCHER), pageable);
+    }
+
+    public Page<E> findAll(@NotNull BaseSearchFilterDTO<E> searchFilter) {
+        return this.repository.findAll(searchFilter.toSpecification(), searchFilter.getPageable());
     }
 
     protected void validateAndPrepareForSave(@NotNull E entity) {
