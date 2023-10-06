@@ -15,7 +15,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping(value = "auth/user", produces = MediaType.APPLICATION_JSON_VALUE)
-public class UserController implements ControllerHttpMethods<User, UserDTO, UserSearchFilter> {
+public class UserController implements ControllerHttpMethods<User, UserResponse, UserSearchFilter> {
 
     private final UserService service;
     private final CustomMapper mapper;
@@ -26,38 +26,38 @@ public class UserController implements ControllerHttpMethods<User, UserDTO, User
     }
 
     @Override
-    public ResponseEntity<Collection<UserDTO>> findAll() {
-        return ResponseEntity.ok(mapper.mapCollection(service.findAll(), UserDTO.class));
+    public ResponseEntity<Collection<UserResponse>> findAll() {
+        return ResponseEntity.ok(mapper.mapCollection(service.findAll(), UserResponse.class));
     }
 
     @Override
-    public ResponseEntity<Page<UserDTO>> findPaged(UserSearchFilter filter, Pageable pageable) {
+    public ResponseEntity<Page<UserResponse>> findPaged(UserSearchFilter filter, Pageable pageable) {
         var entity = mapper.map(filter, User.class);
-        return ResponseEntity.ok(mapper.mapPage(service.findAll(entity, pageable), UserDTO.class));
+        return ResponseEntity.ok(mapper.mapPage(service.findAll(entity, pageable), UserResponse.class));
     }
 
     @Override
-    public ResponseEntity<Page<UserDTO>> findPagedWithFilter(UserSearchFilter filter, Pageable pageable) {
+    public ResponseEntity<Page<UserResponse>> findPagedWithFilter(UserSearchFilter filter, Pageable pageable) {
         filter.setPageable(pageable);
-        return ResponseEntity.ok(mapper.mapPage(service.findAll(filter), UserDTO.class));
+        return ResponseEntity.ok(mapper.mapPage(service.findAll(filter), UserResponse.class));
     }
 
     @Override
-    public ResponseEntity<UserDTO> findById(UUID id) {
-        return ResponseEntity.ok(mapper.map(service.findById(id), UserDTO.class));
+    public ResponseEntity<UserResponse> findById(UUID id) {
+        return ResponseEntity.ok(mapper.map(service.findById(id), UserResponse.class));
     }
 
     @Override
-    public ResponseEntity<UserDTO> save(UserDTO dto) {
+    public ResponseEntity<UserResponse> save(UserResponse dto) {
         var entity = mapper.map(dto, User.class);
-        dto = mapper.map(service.save(entity), UserDTO.class);
+        dto = mapper.map(service.save(entity), UserResponse.class);
         return ResponseEntity.status(HttpStatus.CREATED).body(dto);
     }
 
     @Override
-    public ResponseEntity<UserDTO> update(UserDTO dto) {
+    public ResponseEntity<UserResponse> update(UserResponse dto) {
         var entity = mapper.map(dto, User.class);
-        dto = mapper.map(service.update(entity), UserDTO.class);
+        dto = mapper.map(service.update(entity), UserResponse.class);
         return ResponseEntity.ok(dto);
     }
 

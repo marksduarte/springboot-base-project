@@ -1,6 +1,6 @@
 package dev.marksduarte.springbootbase.domain.user;
 
-import dev.marksduarte.springbootbase.base.BaseDTO;
+import dev.marksduarte.springbootbase.base.BaseResponse;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,7 +12,7 @@ import java.util.UUID;
 @Getter
 @Setter
 @NoArgsConstructor
-public class UserDTO extends BaseDTO {
+public class UserResponse extends BaseResponse {
     private UUID id;
 
     @Length(max = 100, message = "Username must have at least {max} characters.")
