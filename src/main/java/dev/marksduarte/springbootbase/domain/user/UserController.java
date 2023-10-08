@@ -1,6 +1,7 @@
 package dev.marksduarte.springbootbase.domain.user;
 
-import dev.marksduarte.springbootbase.base.ControllerHttpMethods;
+import dev.marksduarte.springbootbase.base.BaseController;
+import dev.marksduarte.springbootbase.base.SearchFilter;
 import dev.marksduarte.springbootbase.mapper.CustomMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -15,7 +16,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping(value = "auth/user", produces = MediaType.APPLICATION_JSON_VALUE)
-public class UserController implements ControllerHttpMethods<User, UserResponse, UserSearchFilter> {
+public class UserController extends BaseController<User, UserResponse> {
 
     private final UserService service;
     private final CustomMapper mapper;
@@ -31,13 +32,13 @@ public class UserController implements ControllerHttpMethods<User, UserResponse,
     }
 
     @Override
-    public ResponseEntity<Page<UserResponse>> findPaged(UserSearchFilter filter, Pageable pageable) {
+    public ResponseEntity<Page<UserResponse>> findPaged(SearchFilter<User> filter, Pageable pageable) {
         var entity = mapper.map(filter, User.class);
         return ResponseEntity.ok(mapper.mapPage(service.findAll(entity, pageable), UserResponse.class));
     }
 
     @Override
-    public ResponseEntity<Page<UserResponse>> findPagedWithFilter(UserSearchFilter filter, Pageable pageable) {
+    public ResponseEntity<Page<UserResponse>> findPagedWithFilter(SearchFilter<User> filter, Pageable pageable) {
         filter.setPageable(pageable);
         return ResponseEntity.ok(mapper.mapPage(service.findAll(filter), UserResponse.class));
     }
